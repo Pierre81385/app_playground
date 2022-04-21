@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "334111310983",
+    "project_id": "app-playground-3b06a",
+    "storage_bucket": "app-playground-3b06a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334111310983:android:6cab45b989817e8f6de422",
+        "android_client_info": {
+          "package_name": "com.example.app_playground"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334111310983-7dd6b55pef1qrtbsjpmrob8283pd67k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCchdGfrvHsRdw-TpQ4sEBH8O82n5WTRus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334111310983-7dd6b55pef1qrtbsjpmrob8283pd67k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,7 +21,7 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'App Playground',
+                  'App Playground Login',
                   style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w500,

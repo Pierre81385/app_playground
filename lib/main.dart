@@ -1,3 +1,4 @@
+import 'package:app_playground/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -15,13 +16,13 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Sample App';
+  static const String _title = 'App Playground';
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: _title,
       theme: ThemeData(
         // This is the theme of your application.
         //

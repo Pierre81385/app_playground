@@ -1,6 +1,8 @@
+import 'package:app_playground/login.dart';
 import 'package:flutter/material.dart';
 import 'validator.dart';
-import 'package:app_playground/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'FirebaseAuth.dart';
 
 class StatefulSignupWidget extends StatefulWidget {
   const StatefulSignupWidget({Key? key}) : super(key: key);
@@ -12,18 +14,26 @@ class StatefulSignupWidget extends StatefulWidget {
 class _StatefulSignupWidgetState extends State<StatefulSignupWidget> {
   final _signupFormKey = GlobalKey<FormState>();
 
-  TextEditingController fnameController = TextEditingController();
-  TextEditingController lnameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
   final _focusFName = FocusNode();
   final _focusLName = FocusNode();
 
+  bool _isProcessing = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      onTap: () {
+        _focusFName.unfocus();
+        _focusLName.unfocus();
+        _focusEmail.unfocus();
+        _focusPassword.unfocus();
+      },
+      child: Scaffold(
         appBar: AppBar(
           title: Text('App Playground'),
         ),
@@ -48,71 +58,109 @@ class _StatefulSignupWidgetState extends State<StatefulSignupWidget> {
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: TextFormField(
-                        controller: fnameController,
+                        controller: _usernameController,
                         focusNode: _focusFName,
                         validator: (value) =>
                             Validator.validateName(name: value),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'First Name',
+                        decoration: InputDecoration(
+                          hintText: "Userame",
+                          errorBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: TextFormField(
-                        controller: lnameController,
-                        focusNode: _focusLName,
-                        validator: (value) =>
-                            Validator.validateName(name: value),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Last Name',
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: TextFormField(
-                        controller: emailController,
+                        controller: _emailController,
                         focusNode: _focusEmail,
                         validator: (value) =>
                             Validator.validateEmail(email: value),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'E-Mail',
+                        decoration: InputDecoration(
+                          hintText: "E-Mail",
+                          errorBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: TextFormField(
-                        controller: passwordController,
+                        controller: _passwordController,
                         focusNode: _focusPassword,
                         obscureText: true,
                         validator: (value) =>
                             Validator.validatePassword(password: value),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Password',
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          errorBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                        height: 50,
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: ElevatedButton(
-                          child: const Text('Signup'),
-                          onPressed: () {
-                            print(emailController.text);
-                            print(passwordController.text);
-                          },
-                        )),
+                    SizedBox(height: 32.0),
+                    _isProcessing
+                        ? CircularProgressIndicator()
+                        : Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      _isProcessing = true;
+                                    });
+
+                                    if (_signupFormKey.currentState!
+                                        .validate()) {
+                                      User? user = await FireAuth
+                                          .registerUsingEmailPassword(
+                                        name: _usernameController.text,
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                      );
+
+                                      setState(() {
+                                        _isProcessing = false;
+                                      });
+
+                                      if (user != null) {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  StatefulLoginWidget()),
+                                          ModalRoute.withName('/'),
+                                        );
+                                      }
+                                    }
+                                  },
+                                  child: Text(
+                                    'Sign up',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                   ],
                 ),
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

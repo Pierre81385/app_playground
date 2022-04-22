@@ -35,10 +35,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: const StatefulLoginWidget(),
-      ),
+      home: const StatefulLoginWidget(),
     );
   }
 }

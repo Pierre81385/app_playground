@@ -19,7 +19,11 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Playground'),
+      ),
+      body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
@@ -106,6 +110,8 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

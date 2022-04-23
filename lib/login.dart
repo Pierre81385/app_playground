@@ -61,7 +61,7 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
                         child: const Text(
                           'Login',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color: Colors.black,
                               fontWeight: FontWeight.w500,
                               fontSize: 30),
                         )),
@@ -106,15 +106,20 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
                       onPressed: () {
                         //forgot password screen
                       },
-                      child: const Text(
-                        'Forgot Password',
-                      ),
+                      child: const Text('Forgot Password',
+                          style: TextStyle(
+                            color: Colors.black,
+                          )),
                     ),
                     Container(
                       height: 50,
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: Expanded(
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.black,
+                              minimumSize: const Size.fromHeight(50), // NEW
+                            ),
                             child: const Text('Login'),
                             onPressed: () async {
                               _focusEmail.unfocus();
@@ -153,7 +158,7 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
                         TextButton(
                           child: const Text(
                             'Signup',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           onPressed: () {
                             //signup screen

@@ -51,7 +51,7 @@ class _StatefulSignupWidgetState extends State<StatefulSignupWidget> {
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color: Colors.black,
                               fontWeight: FontWeight.w500,
                               fontSize: 30),
                         )),
@@ -117,6 +117,11 @@ class _StatefulSignupWidgetState extends State<StatefulSignupWidget> {
                             children: [
                               Expanded(
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.black,
+                                    minimumSize:
+                                        const Size.fromHeight(50), // NEW
+                                  ),
                                   onPressed: () async {
                                     setState(() {
                                       _isProcessing = true;

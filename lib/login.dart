@@ -19,97 +19,103 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('App Playground'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Column(
+    return GestureDetector(
+      onTap: () {
+        _focusEmail.unfocus();
+        _focusPassword.unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('App Playground'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView(
+            children: <Widget>[
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 30),
+                        )),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: TextFormField(
+                        controller: emailController,
+                        focusNode: _focusEmail,
+                        validator: (value) =>
+                            Validator.validateEmail(email: value),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'E-Mail',
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: TextFormField(
+                        controller: passwordController,
+                        focusNode: _focusPassword,
+                        obscureText: true,
+                        validator: (value) =>
+                            Validator.validatePassword(password: value),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  //forgot password screen
+                },
+                child: const Text(
+                  'Forgot Password',
+                ),
+              ),
+              Container(
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: ElevatedButton(
+                    child: const Text('Login'),
+                    onPressed: () {
+                      print(emailController.text);
+                      print(passwordController.text);
+                    },
+                  )),
+              Row(
                 children: <Widget>[
-                  Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(10),
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 30),
-                      )),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: TextFormField(
-                      controller: emailController,
-                      focusNode: _focusEmail,
-                      validator: (value) =>
-                          Validator.validateEmail(email: value),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'E-Mail',
-                      ),
+                  const Text('Don\'t have an account?'),
+                  TextButton(
+                    child: const Text(
+                      'Signup',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: TextFormField(
-                      controller: passwordController,
-                      focusNode: _focusPassword,
-                      obscureText: true,
-                      validator: (value) =>
-                          Validator.validatePassword(password: value),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                      ),
-                    ),
-                  ),
+                    onPressed: () {
+                      //signup screen
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StatefulSignupWidget(),
+                        ),
+                      );
+                    },
+                  )
                 ],
+                mainAxisAlignment: MainAxisAlignment.center,
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                //forgot password screen
-              },
-              child: const Text(
-                'Forgot Password',
-              ),
-            ),
-            Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: ElevatedButton(
-                  child: const Text('Login'),
-                  onPressed: () {
-                    print(emailController.text);
-                    print(passwordController.text);
-                  },
-                )),
-            Row(
-              children: <Widget>[
-                const Text('Don\'t have an account?'),
-                TextButton(
-                  child: const Text(
-                    'Signup',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    //signup screen
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => StatefulSignupWidget(),
-                      ),
-                    );
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

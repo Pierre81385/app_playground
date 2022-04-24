@@ -10,6 +10,20 @@ class Validator {
     return null;
   }
 
+  static String? validateDescription({required String? description}) {
+    if (description == null) {
+      return null;
+    }
+    if (description.isEmpty) {
+      return 'Description can\'t be empty';
+    }
+    if (description.length > 500) {
+      return 'Descrption cannot be longer than 500 characters.';
+    }
+
+    return null;
+  }
+
   static String? validateEmail({required String? email}) {
     if (email == null) {
       return null;

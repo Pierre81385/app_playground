@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'validator.dart';
 import 'FirebaseAuth.dart';
 import 'profile.dart';
+import 'menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -141,11 +142,12 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
                                 });
 
                                 if (user != null) {
-                                  Navigator.of(context).pushReplacement(
+                                  Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProfilePage(user: user),
-                                    ),
+                                        builder: (context) =>
+                                            StatefulMenuWidget(user: user)
+                                        //ProfilePage(user: user),
+                                        ),
                                   );
                                 }
                               }

@@ -5,7 +5,12 @@ import 'validator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AddItem extends StatelessWidget {
+class AddItem extends StatefulWidget {
+  @override
+  State<AddItem> createState() => _AddItem();
+}
+
+class _AddItem extends State<AddItem> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
@@ -13,6 +18,9 @@ class AddItem extends StatelessWidget {
   final _focusName = FocusNode();
   final _focusDescription = FocusNode();
   final _focusPrice = FocusNode();
+
+  String dropdownValue = "Select Menu";
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +33,24 @@ class AddItem extends StatelessWidget {
           .add({
             'name': _nameController.text, // Item Name
             'description': _descriptionController.text, // Item Description
-            'price': _priceController.text // Item Price
+            'price': _priceController.text, // Item Price
+            'menu': dropdownValue,
+            'happyHour': isChecked
           })
           .then((value) => print("Item Added"))
           .catchError((error) => print("Failed to add item: $error"));
+    }
+
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.red;
     }
 
     return GestureDetector(
@@ -57,6 +79,27 @@ class AddItem extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 30),
                           ),
+                        ),
+                        DropdownButton<String>(
+                          value: dropdownValue,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.black,
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                          items: <String>['Select Menu', 'Drinks', 'Food']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                         Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -117,23 +160,30 @@ class AddItem extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Row(
+                          children: [
+                            Text('Happy Hour?'),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                         TextButton(
                           onPressed: addItem,
-                          child: Text(
-                            "Add Item",
-                          ),
+                          child: Text("Add Item to ${dropdownValue} menu"),
                         )
                       ]),
                     )
                   ],
                 ))));
-    //needs input fields
-    // return TextButton(
-    //   onPressed: addItem,
-    //   child: Text(
-    //     "Add Item",
-    //   ),
-    // );
   }
 }
 

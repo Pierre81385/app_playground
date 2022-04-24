@@ -52,6 +52,22 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                           minimumSize: const Size.fromHeight(50) // NEW
                           ),
                       onPressed: () {
+                        print('to All Items');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => ItemInformation()
+                              //ProfilePage(user: user),
+                              ),
+                        );
+                      },
+                      child: Text('All Items')),
+                  SizedBox(height: 16.0),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.black,
+                          minimumSize: const Size.fromHeight(50) // NEW
+                          ),
+                      onPressed: () {
                         print('to Happy Hour Menu');
                       },
                       child: Text('Happy Hour')),

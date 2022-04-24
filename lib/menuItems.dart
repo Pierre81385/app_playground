@@ -63,7 +63,7 @@ class AddItem extends StatelessWidget {
                           child: TextFormField(
                             controller: _nameController,
                             focusNode: _focusName,
-                            obscureText: true,
+                            obscureText: false,
                             validator: (value) =>
                                 Validator.validateName(name: value),
                             decoration: InputDecoration(
@@ -82,7 +82,7 @@ class AddItem extends StatelessWidget {
                           child: TextFormField(
                             controller: _descriptionController,
                             focusNode: _focusDescription,
-                            obscureText: true,
+                            obscureText: false,
                             validator: (value) => Validator.validateDescription(
                                 description: value),
                             decoration: InputDecoration(
@@ -98,11 +98,12 @@ class AddItem extends StatelessWidget {
                           ),
                         ),
                         Container(
+                          //this needs to be more number specific.
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: TextFormField(
                             controller: _priceController,
                             focusNode: _focusPrice,
-                            obscureText: true,
+                            obscureText: false,
                             validator: (value) => Validator.validateDescription(
                                 description: value),
                             decoration: InputDecoration(
@@ -133,5 +134,48 @@ class AddItem extends StatelessWidget {
     //     "Add Item",
     //   ),
     // );
+  }
+}
+
+class ItemInformation extends StatefulWidget {
+  @override
+  _ItemInformationState createState() => _ItemInformationState();
+}
+
+class _ItemInformationState extends State<ItemInformation> {
+  final Stream<QuerySnapshot> _itemsStream =
+      FirebaseFirestore.instance.collection('items').snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _itemsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return Scaffold(
+          appBar: AppBar(title: Text('Items in DB')),
+          body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: ListView(
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return ListTile(
+                  title: Text(data['name']),
+                  subtitle: Text(data['description']),
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

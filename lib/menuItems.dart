@@ -19,8 +19,13 @@ class _AddItem extends State<AddItem> {
   final _focusDescription = FocusNode();
   final _focusPrice = FocusNode();
 
-  String dropdownValue = "Select Menu";
+  String dropdownValue = 'Drinks Menu';
+  String submenuValue = 'Specials';
   bool isChecked = false;
+  bool shellChecked = false;
+  bool vegChecked = false;
+  bool veganChecked = false;
+  bool glutenChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +40,11 @@ class _AddItem extends State<AddItem> {
             'description': _descriptionController.text, // Item Description
             'price': _priceController.text, // Item Price
             'menu': dropdownValue,
+            'submenu': submenuValue,
+            'glutenFree': glutenChecked,
+            'vegan': veganChecked,
+            'vegetarian': vegChecked,
+            'shellfishAllergy': shellChecked,
             'happyHour': isChecked
           })
           .then((value) => print("Item Added"))
@@ -93,7 +103,7 @@ class _AddItem extends State<AddItem> {
                               dropdownValue = newValue!;
                             });
                           },
-                          items: <String>['Select Menu', 'Drinks', 'Food']
+                          items: <String>['Drinks Menu', 'Food Menu']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -101,6 +111,46 @@ class _AddItem extends State<AddItem> {
                             );
                           }).toList(),
                         ),
+                        DropdownButton<String>(
+                            value: submenuValue,
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.black),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.black,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                submenuValue = newValue!;
+                              });
+                            },
+                            items: dropdownValue == 'Drinks Menu'
+                                ? <String>[
+                                    'Specials',
+                                    'Cocktails',
+                                    'Beer',
+                                    'Wine',
+                                    'N/A'
+                                  ].map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList()
+                                : <String>[
+                                    'Specials',
+                                    'Raw Bar Apps',
+                                    'Sushi',
+                                    'Rolls',
+                                    'Cold Plates'
+                                  ].map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList()),
                         Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: TextFormField(
@@ -162,7 +212,59 @@ class _AddItem extends State<AddItem> {
                         ),
                         Row(
                           children: [
-                            Text('Happy Hour?'),
+                            Text('Shellfish Allergy'),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: shellChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  shellChecked = value!;
+                                });
+                              },
+                            ),
+                            Text('Gluten Free'),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: glutenChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  glutenChecked = value!;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('Vegetarian'),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: vegChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  vegChecked = value!;
+                                });
+                              },
+                            ),
+                            Text('Vegan'),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: veganChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  veganChecked = value!;
+                                });
+                              },
+                            ),
+                            Text('Happy Hour'),
                             Checkbox(
                               checkColor: Colors.white,
                               fillColor:

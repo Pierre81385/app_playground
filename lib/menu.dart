@@ -1,6 +1,10 @@
+import 'package:app_playground/drinks.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'menuItems.dart';
+import 'happyhour.dart';
+import 'food.dart';
+import 'drinks.dart';
 
 class StatefulMenuWidget extends StatefulWidget {
   final User user;
@@ -51,23 +55,12 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                           minimumSize: const Size.fromHeight(50) // NEW
                           ),
                       onPressed: () {
-                        print('to All Items');
+                        print('to Happy Hour Menu');
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => ItemInformation()
+                          MaterialPageRoute(builder: (context) => HappyHour()
                               //ProfilePage(user: user),
                               ),
                         );
-                      },
-                      child: Text('All Items')),
-                  SizedBox(height: 16.0),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                          minimumSize: const Size.fromHeight(50) // NEW
-                          ),
-                      onPressed: () {
-                        print('to Happy Hour Menu');
                       },
                       child: Text('Happy Hour')),
                   SizedBox(height: 16.0),
@@ -78,6 +71,9 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                       ),
                       onPressed: () {
                         print('to Drink Menu');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => DrinkMenu()),
+                        );
                       },
                       child: Text('Drinks')),
                   SizedBox(height: 16.0),
@@ -88,6 +84,9 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                       ),
                       onPressed: () {
                         print('to Food Menu');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => FoodMenu()),
+                        );
                       },
                       child: Text('Food')),
                 ],

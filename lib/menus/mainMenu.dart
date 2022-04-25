@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:badges/badges.dart';
 import 'menuItems.dart';
 import 'menuContent.dart';
-
 import 'subMenus.dart';
 
 class StatefulMenuWidget extends StatefulWidget {
@@ -42,6 +42,15 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                   Icons.add, // add custom icons also
                 ),
               ),
+              actions: <Widget>[
+                Badge(
+                  badgeContent: null,
+                  child: IconButton(
+                    icon: Icon(Icons.article),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
             ),
             body: Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),

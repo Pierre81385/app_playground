@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:badges/badges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MenuContent extends StatefulWidget {
   final String content;
@@ -52,7 +54,18 @@ class _MenuContentState extends State<MenuContent> {
         }
 
         return Scaffold(
-          appBar: AppBar(title: Text('Items in DB')),
+          appBar: AppBar(
+            title: Text(_menuName),
+            actions: <Widget>[
+              Badge(
+                badgeContent: null,
+                child: IconButton(
+                  icon: Icon(Icons.article),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
           body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
@@ -80,13 +93,19 @@ class ListTileItem extends StatefulWidget {
 
 class _ListTileItemState extends State<ListTileItem> {
   CollectionReference cart = FirebaseFirestore.instance.collection('cart');
+  User? user = FirebaseAuth.instance.currentUser;
 
   int _itemCount = 0;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onLongPress: () {
-        cart.add({'name': widget.title, 'quantity': _itemCount});
+        cart.add({
+          'name': widget.title,
+          'quantity': _itemCount,
+          'status': 'sent',
+          'user': user?.uid
+        });
         setState(() {
           _itemCount = 0;
         });

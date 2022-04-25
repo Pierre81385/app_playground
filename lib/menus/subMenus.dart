@@ -1,6 +1,7 @@
 import 'package:app_playground/menus/menuContent.dart';
 import 'package:flutter/material.dart';
 import 'menuContent.dart';
+import 'package:badges/badges.dart';
 
 class menuItem {
   final String title;
@@ -61,7 +62,16 @@ class _Menu extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Snack Selection ☝️'),
+        title: Text(widget.menuSelected),
+        actions: <Widget>[
+          Badge(
+            badgeContent: null,
+            child: IconButton(
+              icon: Icon(Icons.article),
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(20),

@@ -63,30 +63,36 @@ class _Menu extends State<Menu> {
       appBar: AppBar(
         title: Text('Snack Selection ☝️'),
       ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          crossAxisCount: 3,
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 1,
+            mainAxisSpacing: 1,
+            crossAxisCount: 3,
+          ),
+          itemCount: _menu.length,
+          itemBuilder: (context, index) {
+            // Item rendering
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MenuContent(content: _menu[index].title)),
+                );
+              },
+              child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Center(
+                    child: Text(_menu[index].title,
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                  color: Colors.black),
+            );
+          },
         ),
-        itemCount: _menu.length,
-        itemBuilder: (context, index) {
-          // Item rendering
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        MenuContent(content: _menu[index].title)),
-              );
-            },
-            child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Text(_menu[index].title),
-                color: Colors.teal[100]),
-          );
-        },
       ),
     );
   }

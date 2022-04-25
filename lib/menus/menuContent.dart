@@ -40,6 +40,7 @@ class _MenuContentState extends State<MenuContent> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference cart = FirebaseFirestore.instance.collection('cart');
     return StreamBuilder<QuerySnapshot>(
       stream: _itemsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -60,8 +61,19 @@ class _MenuContentState extends State<MenuContent> {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
                 return ListTile(
+                  onTap: () {
+                    print('add 1 to the cart');
+                  },
+                  onLongPress: () {
+                    cart.add({
+                      'name': data['name'],
+                      'price': data['price'],
+                    });
+                  },
                   title: Text(data['name']),
-                  subtitle: Text(data['description']),
+                  subtitle: Column(
+                    children: [Text(data['description']), Text('qty: 0')],
+                  ),
                 );
               }).toList(),
             ),

@@ -40,7 +40,6 @@ class _MenuContentState extends State<MenuContent> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference cart = FirebaseFirestore.instance.collection('cart');
     return StreamBuilder<QuerySnapshot>(
       stream: _itemsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -60,26 +59,71 @@ class _MenuContentState extends State<MenuContent> {
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
-                return ListTile(
-                  onTap: () {
-                    print('add 1 to the cart');
-                  },
-                  onLongPress: () {
-                    cart.add({
-                      'name': data['name'],
-                      'price': data['price'],
-                    });
-                  },
-                  title: Text(data['name']),
-                  subtitle: Column(
-                    children: [Text(data['description']), Text('qty: 0')],
-                  ),
-                );
+                return ListTileItem(
+                    title: data['name'], description: data['description']);
               }).toList(),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class ListTileItem extends StatefulWidget {
+  final String title;
+  final String description;
+  const ListTileItem({required this.title, required this.description});
+  @override
+  _ListTileItemState createState() => new _ListTileItemState();
+}
+
+class _ListTileItemState extends State<ListTileItem> {
+  CollectionReference cart = FirebaseFirestore.instance.collection('cart');
+
+  int _itemCount = 0;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onLongPress: () {
+        cart.add({'name': widget.title, 'quantity': _itemCount});
+        setState(() {
+          _itemCount = 0;
+        });
+      },
+      title: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Container(
+              child: Text(widget.title, textAlign: TextAlign.left),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Container(
+              child: Text(widget.description, style: TextStyle(fontSize: 12)),
+            ),
+          ),
+        ],
+      ),
+      trailing: Container(
+        width: 100,
+        child: Row(
+          children: <Widget>[
+            _itemCount != 0
+                ? IconButton(
+                    icon: Icon(Icons.remove),
+                    onPressed: () => setState(() => _itemCount--),
+                  )
+                : Container(),
+            Text(_itemCount.toString()),
+            IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => setState(() => _itemCount++))
+          ],
+        ),
+      ),
     );
   }
 }

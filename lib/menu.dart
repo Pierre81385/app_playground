@@ -26,25 +26,24 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
         child: Scaffold(
             appBar: AppBar(
               title: Text('User: ${_currentUser.displayName}'),
+              leading: GestureDetector(
+                onTap: () {
+                  print('to Add Items Screen');
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AddItem()
+                        //ProfilePage(user: user),
+                        ),
+                  );
+                },
+                child: Icon(
+                  Icons.add, // add custom icons also
+                ),
+              ),
             ),
             body: Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: Column(
                 children: [
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                          minimumSize: const Size.fromHeight(50) // NEW
-                          ),
-                      onPressed: () {
-                        print('to Add Items Screen');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => AddItem()
-                              //ProfilePage(user: user),
-                              ),
-                        );
-                      },
-                      child: Text('Add Items')),
                   SizedBox(height: 16.0),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(

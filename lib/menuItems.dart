@@ -19,7 +19,7 @@ class _AddItem extends State<AddItem> {
   final _focusDescription = FocusNode();
   final _focusPrice = FocusNode();
 
-  String dropdownValue = 'Drinks Menu';
+  String dropdownValue = 'Drink Menu';
   String submenuValue = 'Specials';
   bool isChecked = false;
   bool shellChecked = false;
@@ -47,7 +47,21 @@ class _AddItem extends State<AddItem> {
             'shellfishAllergy': shellChecked,
             'happyHour': isChecked
           })
-          .then((value) => print("Item Added"))
+          .then((value) => {
+                print("Item Added"),
+                setState(() {
+                  _nameController.text = "";
+                  _descriptionController.text = "";
+                  _priceController.text = "";
+                  dropdownValue = 'Drink Menu';
+                  submenuValue = 'Specials';
+                  glutenChecked = false;
+                  vegChecked = false;
+                  vegChecked = false;
+                  shellChecked = false;
+                  isChecked = false;
+                })
+              })
           .catchError((error) => print("Failed to add item: $error"));
     }
 
@@ -90,67 +104,73 @@ class _AddItem extends State<AddItem> {
                                 fontSize: 30),
                           ),
                         ),
-                        DropdownButton<String>(
-                          value: dropdownValue,
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.black),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.black,
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = newValue!;
-                            });
-                          },
-                          items: <String>['Drinks Menu', 'Food Menu']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                        DropdownButton<String>(
-                            value: submenuValue,
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.black),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.black,
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: DropdownButton<String>(
+                                value: dropdownValue,
+                                elevation: 16,
+                                style: const TextStyle(color: Colors.black),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue!;
+                                    submenuValue = 'Specials';
+                                  });
+                                },
+                                items: <String>[
+                                  'Drink Menu',
+                                  'Food Menu'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        textAlign: TextAlign.center),
+                                  );
+                                }).toList(),
+                              ),
                             ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                submenuValue = newValue!;
-                              });
-                            },
-                            items: dropdownValue == 'Drinks Menu'
-                                ? <String>[
-                                    'Specials',
-                                    'Cocktails',
-                                    'Beer',
-                                    'Wine',
-                                    'N/A'
-                                  ].map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList()
-                                : <String>[
-                                    'Specials',
-                                    'Raw Bar Apps',
-                                    'Sushi',
-                                    'Rolls',
-                                    'Cold Plates'
-                                  ].map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList()),
+                            Expanded(
+                              child: DropdownButton<String>(
+                                  value: submenuValue,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Colors.black),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      submenuValue = newValue!;
+                                    });
+                                  },
+                                  items: dropdownValue == 'Drink Menu'
+                                      ? <String>[
+                                          'Specials',
+                                          'Cocktails',
+                                          'Beer',
+                                          'Wine',
+                                          'N/A'
+                                        ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value,
+                                                textAlign: TextAlign.center),
+                                          );
+                                        }).toList()
+                                      : <String>[
+                                          'Specials',
+                                          'Raw Bar Apps',
+                                          'Sushi',
+                                          'Rolls',
+                                          'Cold Plates'
+                                        ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value,
+                                                textAlign: TextAlign.center),
+                                          );
+                                        }).toList()),
+                            ),
+                          ],
+                        ),
                         Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: TextFormField(

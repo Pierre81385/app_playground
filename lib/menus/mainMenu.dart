@@ -1,10 +1,9 @@
-import 'package:app_playground/drinks.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'menuItems.dart';
-import 'happyhour.dart';
-import 'food.dart';
-import 'drinks.dart';
+import 'menuContent.dart';
+
+import 'subMenus.dart';
 
 class StatefulMenuWidget extends StatefulWidget {
   final User user;
@@ -57,7 +56,9 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                       onPressed: () {
                         print('to Happy Hour Menu');
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => HappyHour()
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Menu(menuSelected: 'Happy Hour')
                               //ProfilePage(user: user),
                               ),
                         );
@@ -72,7 +73,9 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                       onPressed: () {
                         print('to Drink Menu');
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => DrinkMenu()),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Menu(menuSelected: 'Drink Menu')),
                         );
                       },
                       child: Text('Drinks')),
@@ -85,7 +88,9 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                       onPressed: () {
                         print('to Food Menu');
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => FoodMenu()),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Menu(menuSelected: 'Food Menu')),
                         );
                       },
                       child: Text('Food')),

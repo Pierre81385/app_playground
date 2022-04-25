@@ -1,8 +1,8 @@
-import 'package:app_playground/login.dart';
+import 'login.dart';
 import 'package:flutter/material.dart';
-import 'validator.dart';
+import '../validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'FirebaseAuth.dart';
+import '../FirebaseAuth.dart';
 
 class StatefulSignupWidget extends StatefulWidget {
   const StatefulSignupWidget({Key? key}) : super(key: key);

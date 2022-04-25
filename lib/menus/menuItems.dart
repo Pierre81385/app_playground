@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'validator.dart';
+import '../validator.dart';
 
 // Import the firebase_core and cloud_firestore plugin
 import 'package:firebase_core/firebase_core.dart';
@@ -143,8 +143,11 @@ class _AddItem extends State<AddItem> {
                                       ? <String>[
                                           'Specials',
                                           'Cocktails',
-                                          'Beer',
-                                          'Wine',
+                                          'Draft',
+                                          'Bottled and Canned Beer',
+                                          'Red Wine',
+                                          'White Wine',
+                                          'Sake',
                                           'N/A'
                                         ].map<DropdownMenuItem<String>>(
                                           (String value) {
@@ -157,9 +160,12 @@ class _AddItem extends State<AddItem> {
                                       : <String>[
                                           'Specials',
                                           'Raw Bar Apps',
-                                          'Sushi',
+                                          'Nigiri | Sashimi | Handrolls',
                                           'Rolls',
-                                          'Cold Plates'
+                                          'Cold Plates',
+                                          'Hot Plates',
+                                          'Yakitori',
+                                          'Desserts'
                                         ].map<DropdownMenuItem<String>>(
                                           (String value) {
                                           return DropdownMenuItem<String>(

@@ -2,16 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DrinkMenu extends StatefulWidget {
+class MenuContent extends StatefulWidget {
+  final String content;
+  const MenuContent({required this.content});
+
   @override
-  _DrinkMenuState createState() => _DrinkMenuState();
+  _MenuContentState createState() => _MenuContentState();
 }
 
-class _DrinkMenuState extends State<DrinkMenu> {
-  final Stream<QuerySnapshot> _itemsStream = FirebaseFirestore.instance
-      .collection('items')
-      .where('menu', isEqualTo: 'Drink Menu')
-      .snapshots();
+class _MenuContentState extends State<MenuContent> {
+  late String _menuName;
+  late Stream<QuerySnapshot> _itemsStream;
+  @override
+  void initState() {
+    _menuName = widget.content;
+    if (_menuName == 'HH Drinks') {
+      _itemsStream = FirebaseFirestore.instance
+          .collection('items')
+          .where('happyHour', isEqualTo: true)
+          .where('menu', isEqualTo: 'Drink Menu')
+          .snapshots();
+    } else if (_menuName == 'HH Food') {
+      _itemsStream = FirebaseFirestore.instance
+          .collection('items')
+          .where('happyHour', isEqualTo: true)
+          .where('menu', isEqualTo: 'Food Menu')
+          .snapshots();
+    } else {
+      _itemsStream = FirebaseFirestore.instance
+          .collection('items')
+          .where('submenu', isEqualTo: _menuName)
+          .snapshots();
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

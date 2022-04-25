@@ -1,9 +1,9 @@
-import 'package:app_playground/signup.dart';
+import 'signup.dart';
 import 'package:flutter/material.dart';
-import 'validator.dart';
-import 'FirebaseAuth.dart';
+import '../validator.dart';
+import '../FirebaseAuth.dart';
 import 'profile.dart';
-import 'menu.dart';
+import '../menus/mainMenu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

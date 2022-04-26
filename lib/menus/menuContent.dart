@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../user/order.dart';
 
 class MenuContent extends StatefulWidget {
   final String content;
@@ -61,7 +62,12 @@ class _MenuContentState extends State<MenuContent> {
                 badgeContent: null,
                 child: IconButton(
                   icon: Icon(Icons.article),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OrderTicket()),
+                    );
+                  },
                 ),
               ),
             ],
@@ -73,7 +79,11 @@ class _MenuContentState extends State<MenuContent> {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
                 return ListTileItem(
-                    title: data['name'], description: data['description']);
+                  title: data['name'],
+                  description: data['description'],
+                  menu: data['menu'],
+                  price: data['price'].toString(),
+                );
               }).toList(),
             ),
           ),
@@ -86,7 +96,13 @@ class _MenuContentState extends State<MenuContent> {
 class ListTileItem extends StatefulWidget {
   final String title;
   final String description;
-  const ListTileItem({required this.title, required this.description});
+  final String menu;
+  final String price;
+  const ListTileItem(
+      {required this.title,
+      required this.description,
+      required this.menu,
+      required this.price});
   @override
   _ListTileItemState createState() => new _ListTileItemState();
 }
@@ -103,8 +119,10 @@ class _ListTileItemState extends State<ListTileItem> {
         cart.add({
           'name': widget.title,
           'quantity': _itemCount,
-          'status': 'sent',
-          'user': user?.uid
+          'status': 'pending',
+          'user': user?.uid,
+          'menu': widget.menu,
+          'price': widget.price
         });
         setState(() {
           _itemCount = 0;

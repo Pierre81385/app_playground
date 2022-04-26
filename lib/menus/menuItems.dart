@@ -38,7 +38,7 @@ class _AddItem extends State<AddItem> {
           .add({
             'name': _nameController.text, // Item Name
             'description': _descriptionController.text, // Item Description
-            'price': _priceController.text, // Item Price
+            'price': double.parse(_priceController.text), // Item Price
             'menu': dropdownValue,
             'submenu': submenuValue,
             'glutenFree': glutenChecked,

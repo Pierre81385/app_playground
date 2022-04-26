@@ -2,6 +2,7 @@ import 'package:app_playground/menus/menuContent.dart';
 import 'package:flutter/material.dart';
 import 'menuContent.dart';
 import 'package:badges/badges.dart';
+import '../user/order.dart';
 
 class menuItem {
   final String title;
@@ -68,7 +69,12 @@ class _Menu extends State<Menu> {
             badgeContent: null,
             child: IconButton(
               icon: Icon(Icons.article),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderTicket()),
+                );
+              },
             ),
           ),
         ],

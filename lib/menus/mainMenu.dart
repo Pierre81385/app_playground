@@ -4,6 +4,8 @@ import 'package:badges/badges.dart';
 import 'menuItems.dart';
 import 'menuContent.dart';
 import 'subMenus.dart';
+import '../user/profile.dart';
+import '../user/order.dart';
 
 class StatefulMenuWidget extends StatefulWidget {
   final User user;
@@ -28,7 +30,18 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
         onTap: () {},
         child: Scaffold(
             appBar: AppBar(
-              title: Text('User: ${_currentUser.displayName}'),
+              title: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(
+                        user: _currentUser,
+                      ),
+                    ),
+                  );
+                },
+                child: Text('User: ${_currentUser.displayName}'),
+              ),
               leading: GestureDetector(
                 onTap: () {
                   print('to Add Items Screen');
@@ -47,7 +60,12 @@ class _StatefulMenuWidgetState extends State<StatefulMenuWidget> {
                   badgeContent: null,
                   child: IconButton(
                     icon: Icon(Icons.article),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OrderTicket()),
+                      );
+                    },
                   ),
                 ),
               ],

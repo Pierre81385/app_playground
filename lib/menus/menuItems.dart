@@ -106,75 +106,71 @@ class _AddItem extends State<AddItem> {
                         ),
                         Row(
                           children: <Widget>[
-                            Expanded(
-                              child: DropdownButton<String>(
-                                value: dropdownValue,
+                            DropdownButton<String>(
+                              value: dropdownValue,
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.black),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                  submenuValue = 'Specials';
+                                });
+                              },
+                              items: <String>[
+                                'Drink Menu',
+                                'Food Menu'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child:
+                                      Text(value, textAlign: TextAlign.center),
+                                );
+                              }).toList(),
+                            ),
+                            DropdownButton<String>(
+                                value: submenuValue,
                                 elevation: 16,
                                 style: const TextStyle(color: Colors.black),
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    dropdownValue = newValue!;
-                                    submenuValue = 'Specials';
+                                    submenuValue = newValue!;
                                   });
                                 },
-                                items: <String>[
-                                  'Drink Menu',
-                                  'Food Menu'
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value,
-                                        textAlign: TextAlign.center),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                            Expanded(
-                              child: DropdownButton<String>(
-                                  value: submenuValue,
-                                  elevation: 16,
-                                  style: const TextStyle(color: Colors.black),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      submenuValue = newValue!;
-                                    });
-                                  },
-                                  items: dropdownValue == 'Drink Menu'
-                                      ? <String>[
-                                          'Specials',
-                                          'Cocktails',
-                                          'Draft',
-                                          'Bottled and Canned Beer',
-                                          'Red Wine',
-                                          'White Wine',
-                                          'Sake',
-                                          'N/A'
-                                        ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value,
-                                                textAlign: TextAlign.center),
-                                          );
-                                        }).toList()
-                                      : <String>[
-                                          'Specials',
-                                          'Raw Bar Apps',
-                                          'Nigiri | Sashimi | Handrolls',
-                                          'Rolls',
-                                          'Cold Plates',
-                                          'Hot Plates',
-                                          'Yakitori',
-                                          'Desserts'
-                                        ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value,
-                                                textAlign: TextAlign.center),
-                                          );
-                                        }).toList()),
-                            ),
+                                items: dropdownValue == 'Drink Menu'
+                                    ? <String>[
+                                        'Specials',
+                                        'Cocktails',
+                                        'Draft',
+                                        'Bottled and Canned Beer',
+                                        'Red Wine',
+                                        'White Wine',
+                                        'Sake',
+                                        'N/A'
+                                      ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              textAlign: TextAlign.center),
+                                        );
+                                      }).toList()
+                                    : <String>[
+                                        'Specials',
+                                        'Raw Bar Apps',
+                                        'Nigiri | Sashimi | Handrolls',
+                                        'Rolls',
+                                        'Cold Plates',
+                                        'Hot Plates',
+                                        'Yakitori',
+                                        'Desserts'
+                                      ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value,
+                                              textAlign: TextAlign.center),
+                                        );
+                                      }).toList()),
                           ],
                         ),
                         Container(

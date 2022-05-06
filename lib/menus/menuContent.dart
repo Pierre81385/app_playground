@@ -112,6 +112,7 @@ class _ListTileItemState extends State<ListTileItem> {
   User? user = FirebaseAuth.instance.currentUser;
 
   int _itemCount = 0;
+  double _total = 0;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -125,7 +126,8 @@ class _ListTileItemState extends State<ListTileItem> {
           'price': widget.price
         });
         setState(() {
-          _itemCount = 0;
+          _total +=
+              double.parse(_itemCount.toString()) * double.parse(widget.price);
         });
       },
       title: Column(

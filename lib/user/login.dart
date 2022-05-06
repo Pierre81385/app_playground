@@ -115,44 +115,42 @@ class _StatefulLoginWidgetState extends State<StatefulLoginWidget> {
                     Container(
                       height: 50,
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Expanded(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.black,
-                              minimumSize: const Size.fromHeight(50), // NEW
-                            ),
-                            child: const Text('Login'),
-                            onPressed: () async {
-                              _focusEmail.unfocus();
-                              _focusPassword.unfocus();
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            minimumSize: const Size.fromHeight(50), // NEW
+                          ),
+                          child: const Text('Login'),
+                          onPressed: () async {
+                            _focusEmail.unfocus();
+                            _focusPassword.unfocus();
 
-                              if (_formKey.currentState!.validate()) {
-                                setState(() {
-                                  _isProcessing = true;
-                                });
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                _isProcessing = true;
+                              });
 
-                                User? user =
-                                    await FireAuth.signInUsingEmailPassword(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
+                              User? user =
+                                  await FireAuth.signInUsingEmailPassword(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+
+                              setState(() {
+                                _isProcessing = false;
+                              });
+
+                              if (user != null) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          StatefulMenuWidget(user: user)
+                                      //ProfilePage(user: user),
+                                      ),
                                 );
-
-                                setState(() {
-                                  _isProcessing = false;
-                                });
-
-                                if (user != null) {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            StatefulMenuWidget(user: user)
-                                        //ProfilePage(user: user),
-                                        ),
-                                  );
-                                }
                               }
-                            }),
-                      ),
+                            }
+                          }),
                     ),
                     Row(
                       children: <Widget>[

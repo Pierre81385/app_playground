@@ -12,8 +12,10 @@ class OrderTicket extends StatefulWidget {
 
 class _OrderTicket extends State<OrderTicket> {
   late Stream<QuerySnapshot> _orderStream;
+
   User? user = FirebaseAuth.instance.currentUser;
-  num sum = 0;
+  final _fireStore = FirebaseFirestore.instance;
+  late num _totalPrice = 0;
 
   @override
   void initState() {
@@ -47,6 +49,7 @@ class DrinkOrderTicket extends StatefulWidget {
 
 class _DrinkOrderTicket extends State<DrinkOrderTicket> {
   late Stream<QuerySnapshot> _drinkStream;
+  var _drinkTotal = 0;
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
